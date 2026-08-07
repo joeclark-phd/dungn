@@ -5,6 +5,7 @@ Game* game_init(void) {
     game->player = (Creature) { '@', "Sir Atsign", (Pos) {10,10} };
     game->turn = 0;
     game->dungeon_level = 0;
+    game->dungeon = dungeon_init();
     return game;
 }
 
