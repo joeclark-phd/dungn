@@ -3,6 +3,7 @@
 
 #include <ncurses.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "util.h"
 #include "creature.h"

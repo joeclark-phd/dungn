@@ -5,6 +5,8 @@ void game_loop(void);
 Game* game;
 
 int main() {
+    srand(time(NULL));
+
     initscr(); // ncurses takes over the console
     curs_set(0); // cursor invisible
     noecho(); // dont' show user input on screen

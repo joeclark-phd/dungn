@@ -7,4 +7,6 @@ struct Pos {
     int x;
 };
 
+int rand_between(int low, int high);
+
 #endif

@@ -5,6 +5,12 @@
 #define DN_HEIGHT 21
 #define DN_WIDTH 80
 
+#define DN_MIN_ROOMS 6
+#define DN_MAX_ROOMS 10
+
+#define DN_MIN_ROOMSIZE 4
+#define DN_MAX_ROOMSIZE 12
+
 typedef struct Tile Tile;
 struct Tile {
     char symbol;
@@ -12,10 +18,19 @@ struct Tile {
     bool transparent;
 };
 
+typedef struct Room Room;
+struct Room {
+    Pos top_left;
+    int height;
+    int width;
+};
+
 typedef struct Level Level;
 struct Level {
     int depth;
     Tile** map;
+    int num_rooms;
+    Room* rooms;
     // items, monsters, etc
 };
 

@@ -10,5 +10,6 @@ Game* game_init(void) {
 }
 
 void game_destroy(Game* game) {
+    dungeon_destroy(game->dungeon);
     free(game);
 };
