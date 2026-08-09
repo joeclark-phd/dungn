@@ -7,10 +7,11 @@ Game* game_init(void) {
         .x = COLS/2,
         .symbol = '@'
     };
-    // creating map, etc
+    game->level = level_init();
     return game;
 }
 
 void game_destroy(Game* game) {
+    level_destroy(game->level);
     free(game);
 }

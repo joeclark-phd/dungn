@@ -22,7 +22,7 @@ int main() {
 
 void game_loop(void) {
     Creature* player = &game->player;
-    mvaddch(player->y, player->x, player->symbol);
+    draw_everything();
 
     int ch;
     while((ch = getch())) {
@@ -35,7 +35,7 @@ void game_loop(void) {
             case KEY_LEFT: --player->x; break;
             case KEY_RIGHT: ++player->x; break;
         }
-        mvaddch(player->y, player->x, player->symbol);
+        draw_everything();
         refresh();
         if(game_over) break;
     }
