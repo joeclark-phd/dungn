@@ -3,7 +3,7 @@
 
 #define DN_HEIGHT 21
 #define DN_WIDTH 80
-#define DN_ROOMS_PER_LEVEL 12
+#define DN_ROOMS_PER_LEVEL 8
 
 typedef struct Tile Tile;
 struct Tile {
@@ -24,6 +24,7 @@ typedef struct Level Level;
 struct Level {
     Tile** map;
     Room* rooms;
+    int num_rooms;
     // monsters, items, etc
 };
 
