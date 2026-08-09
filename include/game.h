@@ -3,9 +3,12 @@
 
 #include <ncurses.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include "creature.h"
 #include "dungeon.h"
 #include "draw.h"
+#include "util.h"
 
 typedef struct Game Game;
 struct Game {
