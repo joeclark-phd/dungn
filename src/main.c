@@ -29,13 +29,22 @@ void game_loop(void) {
     int ch;
     while((ch = getch())) {
         bool game_over = false;
+        bool turn_taken = false;
         clear();
         switch(ch) {
             case 'q': game_over = true; break;
-            case KEY_UP: --player->y; break;
-            case KEY_DOWN: ++player->y; break;
-            case KEY_LEFT: --player->x; break;
-            case KEY_RIGHT: ++player->x; break;
+            case KEY_UP: case '8': turn_taken = attempt_move(player, -1, 0); break;
+            case KEY_DOWN: case '2': turn_taken = attempt_move(player, 1, 0); break;
+            case KEY_LEFT: case '4': turn_taken = attempt_move(player, 0, -1); break;
+            case KEY_RIGHT: case '6': turn_taken = attempt_move(player, 0, 1); break;
+            case '7': turn_taken = attempt_move(player, -1, -1); break;
+            case '9': turn_taken = attempt_move(player, -1, 1); break;
+            case '1': turn_taken = attempt_move(player, 1, -1); break;
+            case '3': turn_taken = attempt_move(player, 1, 1); break;
+        }
+        if(turn_taken) {
+            // monsters move, etc.
+            ++game->turn;
         }
         draw_everything();
         refresh();

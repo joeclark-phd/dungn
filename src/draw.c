@@ -12,6 +12,7 @@ void draw_everything(void) {
     draw_map(map);
     draw_player(player);
     mvprintw(0,0,"Welcome to the Dungeon. Use arrow keys to move.");
+    mvprintw(0,76,"%4d", game->turn);
 
 }
 

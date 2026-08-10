@@ -14,6 +14,7 @@ typedef struct Game Game;
 struct Game {
     Creature player;
     Level* level;
+    int turn;
 };
 
 // constructor + destructor

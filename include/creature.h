@@ -9,5 +9,6 @@ struct Creature {
     char symbol;
 };
 
+bool attempt_move(Creature* c, int dy, int dx);
 
 #endif
