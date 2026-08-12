@@ -10,6 +10,7 @@ struct Tile {
     char symbol;
     bool walkable;
     bool transparent;
+    bool visible;
 };
 
 typedef struct Room Room;

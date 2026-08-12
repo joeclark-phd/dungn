@@ -19,7 +19,9 @@ void draw_everything(void) {
 void draw_map(Tile** map) {
     for(int y=0; y<DN_HEIGHT; ++y) {
         for(int x=0; x<DN_WIDTH; ++x) {
-            mvaddch(y+DRAW_MAP_Y,x,map[y][x].symbol);
+            if(map[y][x].visible) {
+                mvaddch(y+DRAW_MAP_Y,x,map[y][x].symbol);
+            }
         }
     }
 }

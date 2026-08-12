@@ -24,6 +24,7 @@ int main() {
 
 void game_loop(void) {
     Creature* player = &game->player;
+    do_fov();
     draw_everything();
 
     int ch;
@@ -46,6 +47,7 @@ void game_loop(void) {
             // monsters move, etc.
             ++game->turn;
         }
+        do_fov();
         draw_everything();
         refresh();
         if(game_over) break;
