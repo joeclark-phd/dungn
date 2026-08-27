@@ -40,22 +40,20 @@ int interpolate(int from, int to, double t) {
 bool can_see(int ay, int ax, int by, int bx, double range) {
     Tile** map = game->level->map;
     PosArray ln = line(ay, ax, by, bx);
-    bool found = false;
     for(int i=0; i<ln.count; ++i) {
-        if(ln.positions[i].y == by && ln.positions[i].x == bx) {
-            found = true;
-            break;
-        }
-        if(map[ln.positions[i].y][ln.positions[i].x].transparent != true) {
-            break;
-        }
         double dist = hypot( (double)ln.positions[i].y 
             - ay, (double)ln.positions[i].x - ax );
-        if(dist > PLAYER_VIS_RANGE) {
-            break;
+        if(dist > range) {
+            return false;
+        }
+        if(ln.positions[i].y == by && ln.positions[i].x == bx) {
+            return true;
+        }
+        if(map[ln.positions[i].y][ln.positions[i].x].transparent != true) {
+            return false;
         }
     }
-    return found;
+    return false;
 }
 
 void do_fov(void) {
@@ -70,9 +68,10 @@ void do_fov(void) {
     // make tiles visible if player can see them
     for(int y = p->y - PLAYER_VIS_RANGE; y <= p->y + PLAYER_VIS_RANGE; ++y) {
         for(int x=p->x - PLAYER_VIS_RANGE; x<= p->x + PLAYER_VIS_RANGE; ++x) {
-            if( y > 0 && x > 0 && y < DN_HEIGHT && x < DN_WIDTH
+            if( y >= 0 && x >= 0 && y < DN_HEIGHT && x < DN_WIDTH
                 && can_see(p->y,p->x, y, x, PLAYER_VIS_RANGE)) {
                 map[y][x].visible = true;
+                map[y][x].remembered = true;
             }
         }
     }

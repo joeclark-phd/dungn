@@ -13,6 +13,14 @@ int main() {
     noecho(); // don't show user input on screen
     keypad(stdscr, TRUE); // allow special keys
 
+    if(!has_colors() && can_change_color()) {
+        printf("Sorry, your terminal doesn't support colors. Exiting.");
+        return 1;
+    }
+
+    start_color();
+    setup_colors();
+
     game = game_init();
     game_loop();
     game_destroy(game);

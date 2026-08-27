@@ -11,6 +11,7 @@ struct Tile {
     bool walkable;
     bool transparent;
     bool visible;
+    bool remembered;
 };
 
 typedef struct Room Room;

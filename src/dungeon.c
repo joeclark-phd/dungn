@@ -31,6 +31,7 @@ void generate_map(Level* lvl) {
             lvl->map[y][x].symbol = '#';
             lvl->map[y][x].walkable = false;
             lvl->map[y][x].transparent = false;
+            lvl->map[y][x].remembered = false;
         }
     }
     // make random rooms
@@ -55,6 +56,7 @@ void mine_rectangle(Level* lvl, int starty, int startx, int endy, int endx) {
             lvl->map[y][x].symbol = '.';
             lvl->map[y][x].walkable = true;
             lvl->map[y][x].transparent = true;
+            lvl->map[y][x].remembered = false;
         }
     }
 }
@@ -92,7 +94,12 @@ void mine_corridor(Level* lvl, Room a, Room b) {
     int by = rand_between(b.y, b.y+b.height-1);
     int bx = rand_between(b.x, b.x+b.width-1);
 
-    Tile prototype = (Tile) {.symbol='.',.transparent=true,.walkable=true};
+    Tile prototype = (Tile) {
+        .symbol='.',
+        .transparent=true,
+        .walkable=true,
+        .remembered=false
+    };
     while(x != bx) {
         // make tile to floor
         lvl->map[y][x] = prototype;

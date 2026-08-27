@@ -20,12 +20,23 @@ void draw_map(Tile** map) {
     for(int y=0; y<DN_HEIGHT; ++y) {
         for(int x=0; x<DN_WIDTH; ++x) {
             if(map[y][x].visible) {
-                mvaddch(y+DRAW_MAP_Y,x,map[y][x].symbol);
+                mvaddch(y+DRAW_MAP_Y,x,map[y][x].symbol | COLOR_PAIR(VISIBLE_TILE));
+            } else if (map[y][x].remembered) {
+                mvaddch(y+DRAW_MAP_Y,x,map[y][x].symbol | COLOR_PAIR(REMEMBERED_TILE));
             }
+            
         }
     }
 }
 
 void draw_player(Creature* player) {
     mvaddch(player->y+DRAW_MAP_Y, player->x, player->symbol);
+}
+
+void setup_colors(void) {
+    init_color(GRAY_BLUE, 500, 500, 1000);
+
+    init_pair(VISIBLE_TILE, COLOR_WHITE, COLOR_BLACK);
+    init_pair(REMEMBERED_TILE, GRAY_BLUE, COLOR_BLACK);
+
 }
