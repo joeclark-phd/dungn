@@ -19,8 +19,10 @@ void draw_everything(void) {
         if(j%24 <= game->last_status_index) {
             mvprintw(22+i, 0, game->status_log[j%24]);
         }
+        if(j==game->last_status_index) break; // handles issue where last_status_index == 23
     }
-    if((game->previous_last_status+2)%24 < game->last_status_index) {
+    if( (game->previous_last_status+1)%24 < game->last_status_index &&
+        (game->previous_last_status+2)%24 < game->last_status_index ) {
         attron(COLOR_PAIR(REMEMBERED_TILE));
         mvprintw(23,72,"[(m)ore]");
         attroff(COLOR_PAIR(REMEMBERED_TILE));

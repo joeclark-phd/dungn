@@ -34,7 +34,6 @@ void game_loop(void) {
     Creature* player = &game->player;
     do_fov();
     draw_everything();
-
     int ch;
     while((ch = getch())) {
         bool game_over = false;
@@ -56,7 +55,6 @@ void game_loop(void) {
         if(turn_taken) {
             // monsters move, etc.
             ++game->turn;
-            update_message_log_index();
         }
         do_fov();
         draw_everything();

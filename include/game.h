@@ -30,6 +30,7 @@ void game_destroy(Game*);
 void show_message_log(void);
 void update_message_log_index(void);
 void advance_message_log(void);
+void add_message(char* message);
 
 // globals
 extern Game* game;
