@@ -18,7 +18,7 @@ int main() {
         return 1;
     }
 
-    start_color();
+    start_color(); // turn on ncurses color features
     setup_colors();
 
     game = game_init();
