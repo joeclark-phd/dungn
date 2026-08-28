@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <string.h>
 
 #include "creature.h"
 #include "dungeon.h"
@@ -16,11 +17,19 @@ struct Game {
     Creature player;
     Level* level;
     int turn;
+    char** status_log;
+    int last_status_index;
+    int previous_last_status;
 };
 
 // constructor + destructor
 Game* game_init(void);
 void game_destroy(Game*);
+
+// functions
+void show_message_log(void);
+void update_message_log_index(void);
+void advance_message_log(void);
 
 // globals
 extern Game* game;
