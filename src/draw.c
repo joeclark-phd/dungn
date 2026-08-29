@@ -34,9 +34,9 @@ void draw_player(Creature* player) {
 }
 
 void setup_colors(void) {
-    init_color(GRAY_BLUE, 500, 500, 1000);
+    init_color(GRAY_BLUE, 400, 600, 700);
+    init_color(PALE_YELLOW, 1000, 1000, 750);
 
-    init_pair(VISIBLE_TILE, COLOR_WHITE, COLOR_BLACK);
+    init_pair(VISIBLE_TILE, PALE_YELLOW, COLOR_BLACK);
     init_pair(REMEMBERED_TILE, GRAY_BLUE, COLOR_BLACK);
-
 }
