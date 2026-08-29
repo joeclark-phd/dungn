@@ -42,6 +42,8 @@ void game_loop(void) {
         clear();
         switch(ch) {
             case 'q': game_over = true; break;
+            case 'P': show_message_log(); getch(); clear(); break;
+            case 'm': advance_message_log(); break;
             case KEY_UP: case '8': turn_taken = attempt_move(player, -1, 0); break;
             case KEY_DOWN: case '2': turn_taken = attempt_move(player, 1, 0); break;
             case KEY_LEFT: case '4': turn_taken = attempt_move(player, 0, -1); break;

@@ -14,6 +14,18 @@ void draw_everything(void) {
     mvprintw(0,0,"Welcome to the Dungeon. Use arrow keys to move.");
     mvprintw(0,76,"%4d", game->turn);
 
+    // show message(s)
+    int num_messages = ((game->last_status_index+24) - game->previous_last_status) % 24;
+    for(int i=0; i<num_messages && i<2; ++i) {
+        int j = (game->previous_last_status + 1 + i) % 24;
+        mvprintw(22+i, 0, game->status_log[j]);
+    }
+    if(num_messages>2) {
+        attron(COLOR_PAIR(REMEMBERED_TILE));
+        mvprintw(23,72,"[(m)ore]");
+        attroff(COLOR_PAIR(REMEMBERED_TILE));
+    }
+
 }
 
 void draw_map(Tile** map) {
