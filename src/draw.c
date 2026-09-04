@@ -57,7 +57,7 @@ void setup_colors(void) {
     init_color(BLOOD_RED, 750, 0, 0);
     init_color(ROYAL_PURPLE, 500, 0, 1000);
     init_color(OGRE_GREEN, 0, 750, 0);
-    init_color(OWLBEAR_BROWN, 500, 250, 700);
+    init_color(OWLBEAR_BROWN, 600, 460, 320);
     init_color(TIGER_ORANGE, 1000, 500, 0);
     init_color(FROST_BLUE, 0, 250, 1000);
     init_color(POTION_CYAN, 0, 1000, 1000);

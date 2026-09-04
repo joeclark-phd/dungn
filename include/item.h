@@ -32,6 +32,6 @@ struct ItemVector {
 ItemVector* item_vector_create(void);
 void item_vector_destroy(ItemVector*);
 bool item_add(ItemVector*, Item);
-void item_remove(ItemVector, int index);
+void item_remove(ItemVector*, int index);
 
 #endif

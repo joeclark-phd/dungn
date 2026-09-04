@@ -21,11 +21,11 @@ bool item_add(ItemVector* vec, Item item) {
     }
 }
 
-void item_remove(ItemVector vec, int index) {
-    for(int i=index; i<vec.count-1; ++i) {
+void item_remove(ItemVector* vec, int index) {
+    for(int i=index; i<vec->count-1; ++i) {
         // move all items left
-        vec.items[i] = vec.items[i+1];
+        vec->items[i] = vec->items[i+1];
     }
-    vec.count -= 1;
+    vec->count -= 1;
 }
 

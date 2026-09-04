@@ -12,5 +12,7 @@ struct Creature {
 };
 
 bool attempt_move(Creature* c, int dy, int dx);
+bool pick_up_item(Creature* c);
+void open_inventory(Creature* c);
 
 #endif
