@@ -7,6 +7,11 @@ int rand_between(int low, int high) {
     return low + (rand() % (1 + high - low));
 }
 
+Room* random_room_in_level(Level* lvl) {
+    int r = rand_between(0, DN_ROOMS_PER_LEVEL-1);
+    return &lvl->rooms[r];
+}
+
 
 Pos random_position_in_room(Room* r) {
     int y = rand_between(r->y, r->y+r->height-1);

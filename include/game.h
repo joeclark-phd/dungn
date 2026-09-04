@@ -7,6 +7,7 @@
 #include <math.h>
 #include <string.h>
 
+#include "item.h"
 #include "creature.h"
 #include "dungeon.h"
 #include "draw.h"

@@ -5,7 +5,7 @@ void mine_rectangle(Level* lvl, int starty, int startx, int endy, int endx);
 Room random_room(Level* lvl);
 bool overlaps_existing_room(Level* lvl, Room r);
 void mine_corridor(Level* lvl, Room a, Room b);
-
+void place_items(Level* lvl);
 
 
 Level* level_init(void) {
@@ -17,6 +17,7 @@ Level* level_init(void) {
     level->rooms = calloc(DN_ROOMS_PER_LEVEL, sizeof(Room));
     level->num_rooms = 0;
     generate_map(level);
+    place_items(level);
     return level;
 }
 
@@ -125,3 +126,18 @@ void level_destroy(Level* level) {
     free(level);
 }
 
+void place_items(Level* lvl) {
+    for(int i=0; i<DN_ITEMS_PER_LEVEL; ++i) {
+        // pick a random room
+        Room* rm = random_room_in_level(lvl);
+        // pick a random location
+        Pos loc = random_position_in_room(rm);
+        // place the item
+        Item i = ITEMCATALOG[rand_between(0,5)];
+        Tile* t = &lvl->map[loc.y][loc.x];
+        if(!t->items) {
+            t->items = item_vector_create();
+        }
+        item_add(t->items, i);
+    }
+}

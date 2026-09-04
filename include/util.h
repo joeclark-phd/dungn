@@ -13,6 +13,7 @@ struct PosArray {
 };
 
 int rand_between(int low, int high);
+Room* random_room_in_level(Level*);
 Pos random_position_in_room(Room*);
 PosArray line(int ay, int ax, int by, int bx);
 bool can_see(int ay, int ax, int by, int bx, double range);

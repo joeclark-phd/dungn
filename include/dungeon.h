@@ -4,6 +4,7 @@
 #define DN_HEIGHT 21
 #define DN_WIDTH 80
 #define DN_ROOMS_PER_LEVEL 8
+#define DN_ITEMS_PER_LEVEL 20
 
 typedef struct Tile Tile;
 struct Tile {
@@ -12,6 +13,7 @@ struct Tile {
     bool transparent;
     bool visible;
     bool remembered;
+    ItemVector* items;
 };
 
 typedef struct Room Room;

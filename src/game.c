@@ -7,7 +7,8 @@ Game* game_init(void) {
     game->player = (Creature) {
         .y = starting_pos.y,
         .x = starting_pos.x,
-        .symbol = '@'
+        .symbol = '@',
+        .inventory = item_vector_create()
     };
     game->turn = 0;
 
@@ -29,6 +30,7 @@ void game_destroy(Game* game) {
         }
     }
     free(game->status_log);
+    item_vector_destroy(game->player.inventory);
     free(game);
 }
 

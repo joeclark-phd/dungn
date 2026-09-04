@@ -8,6 +8,7 @@ struct Creature {
     int y;
     int x;
     char symbol;
+    ItemVector* inventory;
 };
 
 bool attempt_move(Creature* c, int dy, int dx);
