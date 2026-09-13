@@ -2,6 +2,8 @@
 
 Game* game;
 
+void drop_item(Creature* c, int selection);
+
 bool attempt_move(Creature* c, int dy, int dx) {
     flush_message_log();
     int newy = c->y + dy;
@@ -53,18 +55,58 @@ bool pick_up_item(Creature* c) {
 }
 
 void open_inventory(Creature* c) {
+    flush_message_log();
+
     // create a window
-    WINDOW* inv_win = newwin(22,78,2,0);
+    WINDOW* inv_win = newwin(23,80,1,0);
+    keypad(inv_win, TRUE); // allow special keys
     box(inv_win, 0, 0);
+    mvwprintw(inv_win, 0, 5, "INVENTORY");
+    mvwprintw(inv_win, 22, 35, "Press (d) to drop or (i) to close inventory.");
     int ch;
+    int selection = 0;
     do {
-        if(c->inventory) {
+        switch(ch) {
+            case '8': case KEY_UP: if(selection > 0) --selection; break;
+            case '2': case KEY_DOWN: if(c->inventory && selection+1 < c->inventory->count) ++selection; break;
+            case 'd': 
+                drop_item(c, selection);
+                // list is shorter, blank the last line
+                mvwprintw(inv_win, c->inventory->count+1, 1,  "%-78s", "");
+                if(selection >= c->inventory->count) --selection;
+                break;
+        }
+        if(c->inventory && c->inventory->count>0) {
             for(int i=0; i<c->inventory->count; ++i) {
-                mvwprintw(inv_win, i+1, 1, "%s", c->inventory->items[i].name);
+                if(i==selection) {
+                    wattron(inv_win, A_REVERSE);
+                    mvwprintw(inv_win, i+1, 1, "%s", c->inventory->items[i].name);
+                    wattroff(inv_win, A_REVERSE);
+                } else {
+                    mvwprintw(inv_win, i+1, 1, "%s", c->inventory->items[i].name);
+                }
             }
+        } else {
+            mvwprintw(inv_win, 1,1, "Player inventory is empty.");
         }
 
         wrefresh(inv_win);
-    } while((ch=getch()) != 'i');
+    } while((ch=wgetch(inv_win)) != 'i');
     delwin(inv_win);
+}
+
+void drop_item(Creature* c, int selection) {
+
+    Tile** map = game->level->map;
+    Tile* t = &map[c->y][c->x];
+    ItemVector* inv = c->inventory;
+    if(!t->items) {
+        t->items = item_vector_create();
+    }
+    Item it = inv->items[selection];
+    item_remove(inv, selection);
+    item_add(t->items, it);
+    char message[80];
+    snprintf(message, 80, "Dropped a %s.", it.name );
+    add_message(message);    
 }
