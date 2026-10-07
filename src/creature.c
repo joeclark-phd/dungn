@@ -3,6 +3,8 @@
 Game* game;
 
 void drop_item(Creature* c, int selection);
+void equip_item(Creature* c, int selection);
+
 
 bool attempt_move(Creature* c, int dy, int dx) {
     flush_message_log();
@@ -62,22 +64,32 @@ void open_inventory(Creature* c) {
     keypad(inv_win, TRUE); // allow special keys
     box(inv_win, 0, 0);
     mvwprintw(inv_win, 0, 5, "INVENTORY");
-    mvwprintw(inv_win, 22, 35, "Press (d) to drop or (i) to close inventory.");
+    mvwprintw(inv_win, 22, 15, "Press (d) to drop, (w) to wield/wear, or (i) to close inventory.");
     int ch;
     int selection = 0;
     do {
         switch(ch) {
             case '8': case KEY_UP: if(selection > 0) --selection; break;
             case '2': case KEY_DOWN: if(c->inventory && selection+1 < c->inventory->count) ++selection; break;
-            case 'd': 
-                drop_item(c, selection);
-                // list is shorter, blank the last line
-                mvwprintw(inv_win, c->inventory->count+1, 1,  "%-78s", "");
-                if(selection >= c->inventory->count) --selection;
+            case 'd':
+                if(c->inventory && c->inventory->count>0) {
+                    drop_item(c, selection);
+                    // list is shorter, blank the last line
+                    mvwprintw(inv_win, c->inventory->count+1, 1,  "%-78s", "");
+                    if(selection >= c->inventory->count) --selection;
+                }
+                break;
+            case 'w':
+                if(c->inventory && c->inventory->count>0) {
+                    equip_item(c, selection);
+                }
                 break;
         }
         if(c->inventory && c->inventory->count>0) {
             for(int i=0; i<c->inventory->count; ++i) {
+                if(c->inventory->items[i].equipped) {
+                    wattron(inv_win, COLOR_PAIR(CP_GOLD));
+                }
                 if(i==selection) {
                     wattron(inv_win, A_REVERSE);
                     mvwprintw(inv_win, i+1, 1, "%s", c->inventory->items[i].name);
@@ -85,6 +97,7 @@ void open_inventory(Creature* c) {
                 } else {
                     mvwprintw(inv_win, i+1, 1, "%s", c->inventory->items[i].name);
                 }
+                wattroff(inv_win, COLOR_PAIR(CP_GOLD));
             }
         } else {
             mvwprintw(inv_win, 1,1, "Player inventory is empty.");
@@ -109,4 +122,28 @@ void drop_item(Creature* c, int selection) {
     char message[80];
     snprintf(message, 80, "Dropped a %s.", it.name );
     add_message(message);    
+}
+
+void equip_item(Creature* c, int selection) {
+    ItemVector* inv = c->inventory;
+    Item it = inv->items[selection];
+    if(it.type==NON_EQUIPPABLE) {
+        return;
+    }
+    if(it.equipped) {
+        // un-equip it
+        inv->items[selection].equipped = false;
+    } else {
+        // un-equip all others of the type
+        for(int i=0; i<inv->count; ++i) {
+            if(inv->items[i].type == it.type) {
+                inv->items[i].equipped = false;
+            }
+        }
+        // equip this item
+        inv->items[selection].equipped = true;
+    }
+    char message[80];
+    snprintf(message, 80, "You equip the %s.", it.name );
+    add_message(message);
 }

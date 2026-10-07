@@ -3,19 +3,24 @@
 
 #define ITEM_MAX_IN_VECTOR 20
 
+typedef enum item_type item_type;
+enum item_type { WEAPON, ARMOR, NON_EQUIPPABLE };
+
 typedef struct Item Item;
 struct Item {
     char symbol;
     char* name;
     short color;
+    item_type type;
+    bool equipped;
 };
 
-#define LONGSWORD (Item) {'/', "longsword", CP_GRAY}
-#define HAND_AXE (Item) {'/', "hand axe", CP_RED}
-#define LEATHER_ARMOR (Item) {'(', "leather armor", CP_BROWN}
-#define CHAIN_MAIL (Item) {'[', "chain mail", CP_GRAY}
-#define SCROLL_TELEPORT (Item) {'?', "scroll of teleport", CP_WHITE}
-#define POTION_HEALING (Item) {'!', "potion of healing", CP_PURPLE}
+#define LONGSWORD (Item) {'/', "longsword", CP_GRAY, WEAPON, false}
+#define HAND_AXE (Item) {'/', "hand axe", CP_RED, WEAPON, false}
+#define LEATHER_ARMOR (Item) {'(', "leather armor", CP_BROWN, ARMOR, false}
+#define CHAIN_MAIL (Item) {'[', "chain mail", CP_GRAY, ARMOR, false}
+#define SCROLL_TELEPORT (Item) {'?', "scroll of teleport", CP_WHITE, NON_EQUIPPABLE, false}
+#define POTION_HEALING (Item) {'!', "potion of healing", CP_PURPLE, NON_EQUIPPABLE, false}
 
 #define ITEMCATALOG (Item[]) { LONGSWORD, HAND_AXE, \
     LEATHER_ARMOR, CHAIN_MAIL, SCROLL_TELEPORT,     \
