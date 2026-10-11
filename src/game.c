@@ -14,9 +14,8 @@ Game* game_init(void) {
 
     game->status_log = calloc(24, sizeof(char*));
     game->status_log[0] = strdup("Welcome to the dungeon!");
-    game->status_log[1] = strdup("Press P to see all messages.");
-    game->status_log[2] = strdup("There's a third message here!");
-    game->last_status_index = 2;
+    game->status_log[1] = strdup("Press ? for help, or P to see all messages.");
+    game->last_status_index = 1;
     game->previous_last_status = 23;
 
     return game;
