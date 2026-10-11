@@ -133,6 +133,9 @@ void equip_item(Creature* c, int selection) {
     if(it.equipped) {
         // un-equip it
         inv->items[selection].equipped = false;
+        char message[80];
+        snprintf(message, 80, "You un-equip the %s.", it.name );
+        add_message(message);
     } else {
         // un-equip all others of the type
         for(int i=0; i<inv->count; ++i) {
@@ -142,8 +145,8 @@ void equip_item(Creature* c, int selection) {
         }
         // equip this item
         inv->items[selection].equipped = true;
+        char message[80];
+        snprintf(message, 80, "You equip the %s.", it.name );
+        add_message(message);
     }
-    char message[80];
-    snprintf(message, 80, "You equip the %s.", it.name );
-    add_message(message);
 }
