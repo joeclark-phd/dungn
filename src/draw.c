@@ -40,7 +40,6 @@ void draw_map(Tile** map) {
             } else if (map[y][x].remembered) {
                 mvaddch(y+DRAW_MAP_Y,x,map[y][x].symbol | COLOR_PAIR(REMEMBERED_TILE));
             }
-            
         }
     }
 }
