@@ -1,7 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#define ITEM_MAX_IN_VECTOR 20
+#define ITEM_MAX_IN_VECTOR 21
 
 typedef enum item_type item_type;
 enum item_type { WEAPON, ARMOR, NON_EQUIPPABLE };

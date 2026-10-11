@@ -55,7 +55,7 @@ void game_loop(void) {
             case 'q': game_over = dialog("Are you sure you want to quit?"); break;
             case 'P': show_message_log(); getch(); clear(); break;
             case 'm': advance_message_log(); break;
-            case 'g': pick_up_item(player); break;
+            case 'g': turn_taken = pick_up_item(player); break;
             case 'i': open_inventory(player); break;
             case '?': splash_screen(
                 "ABOUT THE GAME\n\n"
