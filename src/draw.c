@@ -2,6 +2,7 @@
 
 void draw_map(Tile** map);
 void draw_player(Creature* player);
+void draw_creatures();
 
 Game* game;
 
@@ -10,6 +11,7 @@ void draw_everything(void) {
     Creature* player = &game->player;
 
     draw_map(map);
+    draw_creatures();
     draw_player(player);
     mvprintw(0,0,"Welcome to the Dungeon. Use arrow keys to move. Press ? for help.");
     mvprintw(0,76,"%4d", game->turn);
@@ -40,6 +42,17 @@ void draw_map(Tile** map) {
             } else if (map[y][x].remembered) {
                 mvaddch(y+DRAW_MAP_Y,x,map[y][x].symbol | COLOR_PAIR(REMEMBERED_TILE));
             }
+        }
+    }
+}
+
+void draw_creatures() {
+    Tile** map = game->level->map;
+    CreatureVector* vec = game->level->monsters;
+    for(int i=0; i<vec->count; ++i) {
+        Creature c = vec->creatures[i];
+        if(map[c.y][c.x].visible) {
+            mvaddch(c.y+DRAW_MAP_Y, c.x, c.symbol | COLOR_PAIR(c.color));
         }
     }
 }

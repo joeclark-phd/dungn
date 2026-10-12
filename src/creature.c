@@ -6,6 +6,35 @@ void drop_item(Creature* c, int selection);
 void equip_item(Creature* c, int selection);
 
 
+
+CreatureVector* creature_vector_create(void) {
+    CreatureVector* vec = calloc(1, sizeof(CreatureVector));
+    vec->creatures = calloc(DN_CREATURES_PER_LEVEL, sizeof(Creature));
+    vec->count = 0;
+    return vec;
+}
+void creature_vector_destroy(CreatureVector* vec) {
+    free(vec->creatures);
+    free(vec);
+}
+void creature_add(CreatureVector* vec, Creature c) {
+    if(vec->count >= DN_CREATURES_PER_LEVEL) {
+        return;
+    }
+    vec->creatures[vec->count] = c;
+    vec->count += 1;
+}
+void creature_remove(CreatureVector* vec, int index) {
+    if(index+1 < vec->count) {
+        // a swapback array
+        vec->creatures[index] = vec->creatures[vec->count-1];
+    }
+    vec->count -= 1;
+}
+
+
+
+
 bool attempt_move(Creature* c, int dy, int dx) {
     flush_message_log();
     int newy = c->y + dy;

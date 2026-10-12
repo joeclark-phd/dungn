@@ -5,6 +5,7 @@
 #define DN_WIDTH 80
 #define DN_ROOMS_PER_LEVEL 8
 #define DN_ITEMS_PER_LEVEL 60
+#define DN_CREATURES_PER_LEVEL 20
 
 typedef struct Tile Tile;
 struct Tile {
@@ -30,6 +31,7 @@ struct Level {
     Room* rooms;
     int num_rooms;
     // monsters, items, etc
+    CreatureVector* monsters;
 };
 
 

@@ -6,7 +6,7 @@ Room random_room(Level* lvl);
 bool overlaps_existing_room(Level* lvl, Room r);
 void mine_corridor(Level* lvl, Room a, Room b);
 void place_items(Level* lvl);
-
+void place_monsters(Level* lvl);
 
 Level* level_init(void) {
     Level* level = calloc(1, sizeof(Level));
@@ -18,6 +18,8 @@ Level* level_init(void) {
     level->num_rooms = 0;
     generate_map(level);
     place_items(level);
+    level->monsters = creature_vector_create();
+    place_monsters(level);
     return level;
 }
 
@@ -139,5 +141,19 @@ void place_items(Level* lvl) {
             t->items = item_vector_create();
         }
         item_add(t->items, i);
+    }
+}
+
+void place_monsters(Level* lvl) {
+    for(int i=0; i<DN_CREATURES_PER_LEVEL; ++i) {
+        // pick a random room
+        Room* rm = random_room_in_level(lvl);
+        // pick a random location
+        Pos loc = random_position_in_room(rm);
+        // place the item
+        Creature c = CREATURE_CATALOG[rand_between(0,2)];
+        c.y = loc.y;
+        c.x = loc.x;
+        creature_add(lvl->monsters, c);
     }
 }
