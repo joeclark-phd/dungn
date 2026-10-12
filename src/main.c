@@ -97,6 +97,7 @@ void splash_screen(char* message) {
     mvwprintw(splash, 0, 0, message);
     mvwprintw(splash, 21, 50, "Press any Key to continue");
     wrefresh(splash);
+    
     wgetch(splash);
     delwin(splash);
     clear();
