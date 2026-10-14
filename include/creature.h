@@ -10,14 +10,19 @@ struct Creature {
     char* name;
     short color;
     char* attack_verb;
+    int max_attack;
+    int armorclass;
+    int maxhp;
+    int hp;
+    int thac0;
     int y;
     int x;
     ItemVector* inventory;
 };
 
-#define MOUSE (Creature) { 'r', "mouse", CP_WHITE, "bites", 0, 0, 0 }
-#define GOBLIN (Creature) { 'g', "goblin", CP_GREEN, "stabs", 0, 0, 0 }
-#define SPIDER (Creature) { 'x', "cave spider", CP_BLUE, "stings", 0, 0, 0 }
+#define MOUSE (Creature) { 'r', "mouse", CP_WHITE, "bites", 3, 4, 2, 2, 20, 0, 0, 0 }
+#define GOBLIN (Creature) { 'g', "goblin", CP_GREEN, "stabs", 6, 10, 5, 5, 20, 0, 0, 0 }
+#define SPIDER (Creature) { 'x', "cave spider", CP_BLUE, "stings", 4, 6, 4, 4, 20, 0, 0, 0 }
 
 #define CREATURE_CATALOG (Creature[]) { MOUSE, GOBLIN, SPIDER }
 
@@ -37,7 +42,7 @@ void creature_vector_destroy(CreatureVector*);
 void creature_add(CreatureVector*, Creature);
 void creature_remove(CreatureVector*, int index);
 
-bool monster_at(int y, int x);
+int monster_at(int y, int x);
 void monsters_move();
 
 #endif

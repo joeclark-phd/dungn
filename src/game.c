@@ -8,7 +8,12 @@ Game* game_init(void) {
         .y = starting_pos.y,
         .x = starting_pos.x,
         .symbol = '@',
-        .inventory = item_vector_create()
+        .inventory = item_vector_create(),
+        .maxhp = 10,
+        .hp = 10,
+        .thac0 = 20,
+        .armorclass = 10,
+        .max_attack = 3
     };
     game->turn = 0;
 

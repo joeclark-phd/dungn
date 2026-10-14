@@ -84,6 +84,10 @@ void game_loop(void) {
         do_fov();
         draw_everything();
         refresh();
+        if(player->hp <= 0) {
+            splash_screen("You are dead!");
+            game_over = true;
+        }
         if(game_over) break;
     }
 }

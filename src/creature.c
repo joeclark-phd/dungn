@@ -41,7 +41,31 @@ bool attempt_move(Creature* c, int dy, int dx) {
     int newx = c->x + dx;
     // check if walkable tile
     Tile** map = game->level->map;
-    if(monster_at(newy, newx)) {
+    if(monster_at(newy, newx) >= 0) {
+        Creature* m = &game->level->monsters->creatures[monster_at(newy,newx)];
+        int roll = rand_between(1, 20);
+        int tohit = c->thac0 - m->armorclass;
+        if(roll >= tohit) {
+            // hit!
+            int damage = rand_between(1, c->max_attack);
+            m->hp -= damage;
+            char message[80];
+            snprintf(message, 80, "You hit %s for %d damage", 
+                m->name, damage );
+            add_message(message);
+        } else {
+            char message[80];
+            snprintf(message, 80, "You miss the %s", m->name );
+            add_message(message);
+        }
+        if(m->hp <= 0) {
+            // monster kill
+            char message[80];
+            snprintf(message, 80, "You slay the %s!", 
+                m->name );
+            add_message(message);
+            creature_remove(game->level->monsters, monster_at(newy,newx));
+        }
         // TODO: attack
         return true;
     }
@@ -184,14 +208,14 @@ void equip_item(Creature* c, int selection) {
     }
 }
 
-bool monster_at(int y, int x) {
+int monster_at(int y, int x) {
     CreatureVector* vec = game->level->monsters;
     for(int i=0; i<vec->count; ++i) {
         if(vec->creatures[i].y == y && vec->creatures[i].x == x) {
-            return true;
+            return i;
         }
     }
-    return false;
+    return -1; // no monster there
 }
 
 
@@ -206,13 +230,23 @@ void monsters_move() {
             // - if yes, draw a line/path to the player
             PosArray mline = line(m->y, m->x, player->y, player->x);
             // - try to move to the next position in line
-            Pos p = mline.positions[1];
-            if(monster_at(p.y,p.x)) {
+            Pos p = mline.positions[1 ];
+            if(monster_at(p.y,p.x) >= 0) {
                 // do nothing, another monster is in that spot
                 continue;
             }
             if(player->y==p.y && player->x==p.x) {
-                // TODO: attacking player
+                int roll = rand_between(1, 20);
+                int tohit = m->thac0 - player->armorclass;
+                if(roll >= tohit) {
+                    // hit!
+                    int damage = rand_between(1, m->max_attack);
+                    player->hp -= damage;
+                    char message[80];
+                    snprintf(message, 80, "%s %s you for %d damage", 
+                        m->name, m->attack_verb, damage );
+                    add_message(message);
+                }
                 continue;
             }
             m->y = p.y;

@@ -13,7 +13,7 @@ void draw_everything(void) {
     draw_map(map);
     draw_creatures();
     draw_player(player);
-    mvprintw(0,0,"Welcome to the Dungeon. Use arrow keys to move. Press ? for help.");
+    mvprintw(0,0,"HP: %2d/%2d AC:%2d", player->hp, player->maxhp, player->armorclass);
     mvprintw(0,76,"%4d", game->turn);
 
     // show message(s)
