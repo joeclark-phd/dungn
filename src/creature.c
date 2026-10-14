@@ -41,6 +41,10 @@ bool attempt_move(Creature* c, int dy, int dx) {
     int newx = c->x + dx;
     // check if walkable tile
     Tile** map = game->level->map;
+    if(monster_at(newy, newx)) {
+        // TODO: attack
+        return true;
+    }
     if(map[newy][newx].walkable) {
         c->y = newy;
         c->x = newx;
@@ -177,5 +181,42 @@ void equip_item(Creature* c, int selection) {
         char message[80];
         snprintf(message, 80, "You equip the %s.", it.name );
         add_message(message);
+    }
+}
+
+bool monster_at(int y, int x) {
+    CreatureVector* vec = game->level->monsters;
+    for(int i=0; i<vec->count; ++i) {
+        if(vec->creatures[i].y == y && vec->creatures[i].x == x) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+void monsters_move() {
+    Creature* player = &game->player;
+    // loop over all monsters
+    CreatureVector* vec = game->level->monsters;
+    for(int i=0; i<vec->count; ++i) {
+        Creature* m = &vec->creatures[i];
+        // - can it see player?
+        if(can_see(m->y, m->x, player->y, player->x, MONSTER_VIS_RANGE)) {
+            // - if yes, draw a line/path to the player
+            PosArray mline = line(m->y, m->x, player->y, player->x);
+            // - try to move to the next position in line
+            Pos p = mline.positions[1];
+            if(monster_at(p.y,p.x)) {
+                // do nothing, another monster is in that spot
+                continue;
+            }
+            if(player->y==p.y && player->x==p.x) {
+                // TODO: attacking player
+                continue;
+            }
+            m->y = p.y;
+            m->x = p.x;
+        }
     }
 }

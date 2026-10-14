@@ -2,6 +2,7 @@
 #define CREATURE_H
 
 #define PLAYER_VIS_RANGE 3.5
+#define MONSTER_VIS_RANGE 5.5
 
 typedef struct Creature Creature;
 struct Creature {
@@ -35,5 +36,8 @@ CreatureVector* creature_vector_create(void);
 void creature_vector_destroy(CreatureVector*);
 void creature_add(CreatureVector*, Creature);
 void creature_remove(CreatureVector*, int index);
+
+bool monster_at(int y, int x);
+void monsters_move();
 
 #endif

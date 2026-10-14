@@ -79,6 +79,7 @@ void game_loop(void) {
         if(turn_taken) {
             // monsters move, etc.
             ++game->turn;
+            monsters_move();
         }
         do_fov();
         draw_everything();
