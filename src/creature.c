@@ -50,12 +50,12 @@ bool attempt_move(Creature* c, int dy, int dx) {
             int damage = rand_between(1, c->max_attack);
             m->hp -= damage;
             char message[80];
-            snprintf(message, 80, "You hit %s for %d damage", 
+            snprintf(message, 80, "You hit %s for %d damage.", 
                 m->name, damage );
             add_message(message);
         } else {
             char message[80];
-            snprintf(message, 80, "You miss the %s", m->name );
+            snprintf(message, 80, "You miss the %s.", m->name );
             add_message(message);
         }
         if(m->hp <= 0) {
@@ -243,8 +243,12 @@ void monsters_move() {
                     int damage = rand_between(1, m->max_attack);
                     player->hp -= damage;
                     char message[80];
-                    snprintf(message, 80, "%s %s you for %d damage", 
+                    snprintf(message, 80, "The %s %s you for %d damage.", 
                         m->name, m->attack_verb, damage );
+                    add_message(message);
+                } else {
+                    char message[80];
+                    snprintf(message, 80, "The %s misses you.", m->name );
                     add_message(message);
                 }
                 continue;
