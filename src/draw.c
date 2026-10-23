@@ -13,8 +13,7 @@ void draw_everything(void) {
     draw_map(map);
     draw_creatures();
     draw_player(player);
-    mvprintw(0,0,"HP: %2d/%2d AC:%2d", player->hp, player->maxhp, player->armorclass);
-    mvprintw(0,76,"%4d", game->turn);
+    draw_status_bar();
 
     // show message(s)
     int num_messages = ((game->last_status_index+24) - game->previous_last_status) % 24;
@@ -28,6 +27,13 @@ void draw_everything(void) {
         attroff(COLOR_PAIR(REMEMBERED_TILE));
     }
 
+}
+
+void draw_status_bar() {
+    Creature* player = &game->player;
+    mvprintw(0,0,"HP: %2d/%2d AC:%2d ATK:1-%d", player->hp, 
+        player->maxhp, player->armorclass, player->max_attack);
+    mvprintw(0,76,"%4d", game->turn);
 }
 
 void draw_map(Tile** map) {

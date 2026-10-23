@@ -159,10 +159,12 @@ void open_inventory(Creature* c) {
         } else {
             mvwprintw(inv_win, 1,1, "Player inventory is empty.");
         }
-
+        draw_status_bar();
+        refresh();
         wrefresh(inv_win);
     } while((ch=wgetch(inv_win)) != 'i');
     delwin(inv_win);
+    clear();
 }
 
 void drop_item(Creature* c, int selection) {
@@ -193,6 +195,16 @@ void equip_item(Creature* c, int selection) {
         char message[80];
         snprintf(message, 80, "You un-equip the %s.", it.name );
         add_message(message);
+        switch(it.type) {
+            case WEAPON:
+                c->max_attack = 3;
+                break;
+            case ARMOR:
+                c->armorclass = 10;
+                break;
+            default:
+                break;
+        }
     } else {
         // un-equip all others of the type
         for(int i=0; i<inv->count; ++i) {
@@ -202,6 +214,16 @@ void equip_item(Creature* c, int selection) {
         }
         // equip this item
         inv->items[selection].equipped = true;
+        switch(it.type) {
+            case WEAPON:
+                c->max_attack = it.power;
+                break;
+            case ARMOR:
+                c->armorclass = 10 - it.power;
+                break;
+            default:
+                break;
+        }
         char message[80];
         snprintf(message, 80, "You equip the %s.", it.name );
         add_message(message);

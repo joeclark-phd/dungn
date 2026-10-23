@@ -33,6 +33,7 @@
 #define CP_GRAY 11
 #define CP_WHITE 12
 
+void draw_status_bar();
 void draw_everything(void);
 void setup_colors(void);
 

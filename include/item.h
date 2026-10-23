@@ -12,13 +12,14 @@ struct Item {
     char* name;
     short color;
     item_type type;
+    int power;
     bool equipped;
 };
 
-#define LONGSWORD (Item) {'/', "longsword", CP_GRAY, WEAPON, false}
-#define HAND_AXE (Item) {'/', "hand axe", CP_RED, WEAPON, false}
-#define LEATHER_ARMOR (Item) {'(', "leather armor", CP_BROWN, ARMOR, false}
-#define CHAIN_MAIL (Item) {'[', "chain mail", CP_GRAY, ARMOR, false}
+#define LONGSWORD (Item) {'/', "longsword", CP_GRAY, WEAPON, 8, false}
+#define HAND_AXE (Item) {'/', "hand axe", CP_RED, WEAPON, 6, false}
+#define LEATHER_ARMOR (Item) {'(', "leather armor", CP_BROWN, ARMOR, 3, false}
+#define CHAIN_MAIL (Item) {'[', "chain mail", CP_GRAY, ARMOR, 5, false}
 #define SCROLL_TELEPORT (Item) {'?', "scroll of teleport", CP_WHITE, NON_EQUIPPABLE, false}
 #define POTION_HEALING (Item) {'!', "potion of healing", CP_PURPLE, NON_EQUIPPABLE, false}
 
