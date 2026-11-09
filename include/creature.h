@@ -42,7 +42,7 @@ void creature_vector_destroy(CreatureVector*);
 void creature_add(CreatureVector*, Creature);
 void creature_remove(CreatureVector*, int index);
 
-int monster_at(int y, int x);
+int monster_at(CreatureVector* vec, int y, int x);
 void monsters_move();
 
 #endif

@@ -41,8 +41,9 @@ bool attempt_move(Creature* c, int dy, int dx) {
     int newx = c->x + dx;
     // check if walkable tile
     Tile** map = game->level->map;
-    if(monster_at(newy, newx) >= 0) {
-        Creature* m = &game->level->monsters->creatures[monster_at(newy,newx)];
+    CreatureVector* monsters = game->level->monsters;
+    if(monster_at(monsters, newy, newx) >= 0) {
+        Creature* m = &game->level->monsters->creatures[monster_at(monsters,newy,newx)];
         int roll = rand_between(1, 20);
         int tohit = c->thac0 - m->armorclass;
         if(roll >= tohit) {
@@ -64,7 +65,7 @@ bool attempt_move(Creature* c, int dy, int dx) {
             snprintf(message, 80, "You slay the %s!", 
                 m->name );
             add_message(message);
-            creature_remove(game->level->monsters, monster_at(newy,newx));
+            creature_remove(game->level->monsters, monster_at(monsters,newy,newx));
         }
         // TODO: attack
         return true;
@@ -230,8 +231,8 @@ void equip_item(Creature* c, int selection) {
     }
 }
 
-int monster_at(int y, int x) {
-    CreatureVector* vec = game->level->monsters;
+
+int monster_at(CreatureVector* vec, int y, int x) {
     for(int i=0; i<vec->count; ++i) {
         if(vec->creatures[i].y == y && vec->creatures[i].x == x) {
             return i;
@@ -253,7 +254,7 @@ void monsters_move() {
             PosArray mline = line(m->y, m->x, player->y, player->x);
             // - try to move to the next position in line
             Pos p = mline.positions[1 ];
-            if(monster_at(p.y,p.x) >= 0) {
+            if(monster_at(vec,p.y,p.x) >= 0) {
                 // do nothing, another monster is in that spot
                 continue;
             }

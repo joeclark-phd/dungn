@@ -146,10 +146,15 @@ void place_items(Level* lvl) {
 
 void place_monsters(Level* lvl) {
     for(int i=0; i<DN_CREATURES_PER_LEVEL; ++i) {
-        // pick a random room
-        Room* rm = random_room_in_level(lvl);
-        // pick a random location
-        Pos loc = random_position_in_room(rm);
+        Pos loc = {};
+        do {
+            // pick a random room
+            Room* rm = random_room_in_level(lvl);
+            // pick a random location
+            loc = random_position_in_room(rm);
+        } while (
+            monster_at(lvl->monsters,loc.y,loc.x) >= 0
+        );
         // place the item
         Creature c = CREATURE_CATALOG[rand_between(0,2)];
         c.y = loc.y;
