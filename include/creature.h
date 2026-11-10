@@ -18,6 +18,8 @@ struct Creature {
     int y;
     int x;
     ItemVector* inventory;
+    magic_type effect;
+    int effect_duration;
 };
 
 #define MOUSE (Creature) { 'r', "mouse", CP_WHITE, "bites", 3, 4, 2, 2, 20, 0, 0, 0 }

@@ -31,8 +31,14 @@ void draw_everything(void) {
 
 void draw_status_bar() {
     Creature* player = &game->player;
-    mvprintw(0,0,"HP: %2d/%2d AC:%2d ATK:1-%d", player->hp, 
-        player->maxhp, player->armorclass, player->max_attack);
+    char* fx;
+    switch(player->effect) {
+        case STRENGTH: fx="STRONG"; break;
+        case INVISIBILITY: fx="INVISIBLE"; break;
+        default: fx=""; break;
+    }
+    mvprintw(0,0,"HP: %2d/%2d AC:%2d ATK:1-%d %s", player->hp, 
+        player->maxhp, player->armorclass, player->max_attack, fx);
     mvprintw(0,76,"%4d", game->turn);
 }
 
@@ -64,7 +70,9 @@ void draw_creatures() {
 }
 
 void draw_player(Creature* player) {
-    mvaddch(player->y+DRAW_MAP_Y, player->x, player->symbol);
+    short cp = CP_WHITE;
+    if(player->effect==INVISIBILITY) cp = CP_INVISIBLE;
+    mvaddch(player->y+DRAW_MAP_Y, player->x, player->symbol | COLOR_PAIR(cp));
 }
 
 void setup_colors(void) {
@@ -92,6 +100,7 @@ void setup_colors(void) {
     init_pair(CP_CYAN, POTION_CYAN, COLOR_BLACK);
     init_pair(CP_GRAY, STEEL_GRAY, COLOR_BLACK);
     init_pair(CP_WHITE, BONE_WHITE, COLOR_BLACK);
+    init_pair(CP_INVISIBLE, BONE_WHITE, STEEL_GRAY);
 
     init_pair(VISIBLE_TILE, PALE_YELLOW, COLOR_BLACK);
     init_pair(REMEMBERED_TILE, GRAY_BLUE, COLOR_BLACK);

@@ -32,6 +32,7 @@
 #define CP_CYAN 10
 #define CP_GRAY 11
 #define CP_WHITE 12
+#define CP_INVISIBLE 13
 
 void draw_status_bar();
 void draw_everything(void);

@@ -84,6 +84,12 @@ void game_loop(void) {
                 if(player->hp<player->maxhp) ++player->hp;
             }
             monsters_move();
+            if(player->effect_duration > 0) {
+                --player->effect_duration;
+            }
+            if(player->effect_duration==0) {
+                player->effect = NONE;
+            }
         }
         do_fov();
         draw_everything();

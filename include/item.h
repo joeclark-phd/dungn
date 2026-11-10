@@ -6,7 +6,7 @@
 typedef enum item_type item_type;
 enum item_type { WEAPON, ARMOR, NON_EQUIPPABLE };
 typedef enum magic_type magic_type;
-enum magic_type { NONE, HEAL, TELEPORT };
+enum magic_type { NONE, HEAL, TELEPORT, INVISIBILITY, STRENGTH };
 
 typedef struct Item Item;
 struct Item {
@@ -25,10 +25,12 @@ struct Item {
 #define CHAIN_MAIL (Item) {'[', "chain mail", CP_GRAY, ARMOR, NONE, 5, false}
 #define SCROLL_TELEPORT (Item) {'?', "scroll of teleport", CP_WHITE, NON_EQUIPPABLE, TELEPORT, false}
 #define POTION_HEALING (Item) {'!', "potion of healing", CP_PURPLE, NON_EQUIPPABLE, HEAL, false}
+#define POTION_INVISIBILITY (Item) {'!', "potion of invisibility", CP_ORANGE, NON_EQUIPPABLE, INVISIBILITY, false}
+#define POTION_STRENGTH (Item) {'!', "potion of strength", CP_CYAN, NON_EQUIPPABLE, STRENGTH, false}
 
 #define ITEMCATALOG (Item[]) { LONGSWORD, HAND_AXE, \
     LEATHER_ARMOR, CHAIN_MAIL, SCROLL_TELEPORT,     \
-    POTION_HEALING}
+    POTION_HEALING, POTION_INVISIBILITY, POTION_STRENGTH }
 
 // a variable-length collection of items
 typedef struct ItemVector ItemVector;

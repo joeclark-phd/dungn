@@ -46,10 +46,16 @@ bool attempt_move(Creature* c, int dy, int dx) {
     if(monster_at(monsters, newy, newx) >= 0) {
         Creature* m = &game->level->monsters->creatures[monster_at(monsters,newy,newx)];
         int roll = rand_between(1, 20);
+        if(c->effect==STRENGTH) {
+            roll += 2;
+        }
         int tohit = c->thac0 - m->armorclass;
         if(roll >= tohit) {
             // hit!
             int damage = rand_between(1, c->max_attack);
+            if(c->effect==STRENGTH) {
+                damage += 2;
+            }
             m->hp -= damage;
             char message[80];
             snprintf(message, 80, "You hit %s for %d damage.", 
@@ -214,6 +220,14 @@ void use_item(Creature* c, int selection) {
             c->y = p.y;
             c->x = p.x;
             break;
+        case STRENGTH:
+            c->effect = STRENGTH;
+            c->effect_duration = 40;
+            break;
+        case INVISIBILITY:
+            c->effect = INVISIBILITY;
+            c->effect_duration = 40;
+            break;
     }
     item_remove(inv, selection);
     char message[80];
@@ -287,7 +301,7 @@ void monsters_move() {
     for(int i=0; i<vec->count; ++i) {
         Creature* m = &vec->creatures[i];
         // - can it see player?
-        if(can_see(m->y, m->x, player->y, player->x, MONSTER_VIS_RANGE)) {
+        if(player->effect!=INVISIBILITY && can_see(m->y, m->x, player->y, player->x, MONSTER_VIS_RANGE)) {
             // - if yes, draw a line/path to the player
             PosArray mline = line(m->y, m->x, player->y, player->x);
             // - try to move to the next position in line

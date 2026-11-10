@@ -18,7 +18,9 @@ Game* game_init(void) {
         .hp = 10,
         .thac0 = 20,
         .armorclass = 10,
-        .max_attack = 3
+        .max_attack = 3,
+        .effect = NONE,
+        .effect_duration = 0
     };
     game->turn = 0;
 

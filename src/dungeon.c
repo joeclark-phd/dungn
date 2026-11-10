@@ -135,7 +135,7 @@ void place_items(Level* lvl) {
         // pick a random location
         Pos loc = random_position_in_room(rm);
         // place the item
-        Item i = ITEMCATALOG[rand_between(0,5)];
+        Item i = ITEMCATALOG[rand_between(0,7)];
         Tile* t = &lvl->map[loc.y][loc.x];
         if(!t->items) {
             t->items = item_vector_create();
