@@ -3,6 +3,7 @@
 Game* game;
 
 void drop_item(Creature* c, int selection);
+void use_item(Creature* c, int selection);
 void equip_item(Creature* c, int selection);
 
 
@@ -122,7 +123,7 @@ void open_inventory(Creature* c) {
     keypad(inv_win, TRUE); // allow special keys
     box(inv_win, 0, 0);
     mvwprintw(inv_win, 0, 5, "INVENTORY");
-    mvwprintw(inv_win, 22, 15, "Press (d) to drop, (w) to wield/wear, or (i) to close inventory.");
+    mvwprintw(inv_win, 22, 3, "Press (d) to drop, (u) to use, (w) to wield/wear, or (i) to close inventory.");
     int ch;
     int selection = 0;
     do {
@@ -130,6 +131,7 @@ void open_inventory(Creature* c) {
             case '8': case KEY_UP: if(selection > 0) --selection; break;
             case '2': case KEY_DOWN: if(c->inventory && selection+1 < c->inventory->count) ++selection; break;
             case 'd':
+                // drop item
                 if(c->inventory && c->inventory->count>0) {
                     drop_item(c, selection);
                     // list is shorter, blank the last line
@@ -138,10 +140,20 @@ void open_inventory(Creature* c) {
                 }
                 break;
             case 'w':
+                // wear/wield item
                 if(c->inventory && c->inventory->count>0) {
                     equip_item(c, selection);
                 }
                 break;
+            case 'u':
+                // use a magic item
+                if(c->inventory && c->inventory->count>0) {
+                    use_item(c, selection);
+                    // list is shorter, blank the last line
+                    mvwprintw(inv_win, c->inventory->count+1, 1,  "%-78s", "");
+                    if(selection >= c->inventory->count) --selection;
+                }
+
         }
         if(c->inventory && c->inventory->count>0) {
             for(int i=0; i<c->inventory->count; ++i) {
@@ -183,6 +195,32 @@ void drop_item(Creature* c, int selection) {
     snprintf(message, 80, "Dropped a %s.", it.name );
     add_message(message);    
 }
+
+void use_item(Creature* c, int selection) {
+    ItemVector* inv = c->inventory;
+    Item it = inv->items[selection];
+    Pos p = {};
+    switch(it.magic) {
+        case NONE:
+            return;
+        case HEAL:
+            c->hp += 10;
+            if(c->hp > c->maxhp) c->hp = c->maxhp;
+            break;
+        case TELEPORT:
+            do {
+                p = random_position_in_room(random_room_in_level(game->level));
+            } while(monster_at(game->level->monsters, p.y, p.x) > -1);
+            c->y = p.y;
+            c->x = p.x;
+            break;
+    }
+    item_remove(inv, selection);
+    char message[80];
+    snprintf(message, 80, "Used a %s.", it.name );
+    add_message(message);    
+}
+
 
 void equip_item(Creature* c, int selection) {
     ItemVector* inv = c->inventory;
