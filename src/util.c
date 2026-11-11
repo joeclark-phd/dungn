@@ -2,6 +2,8 @@
 
 int num_steps(int ay, int ax, int by, int bx);
 int interpolate(int from, int to, double t);
+bool has_adjacent_transparent(int ycoord, int xcoord);
+
 
 int rand_between(int low, int high) {
     return low + (rand() % (1 + high - low));
@@ -70,15 +72,41 @@ void do_fov(void) {
             map[y][x].visible = false;
         }
     }
+    double range = PLAYER_VIS_RANGE;
+    if(game->player.effect==LIGHT) range += 3;
     // make tiles visible if player can see them
-    for(int y = p->y - PLAYER_VIS_RANGE; y <= p->y + PLAYER_VIS_RANGE; ++y) {
-        for(int x=p->x - PLAYER_VIS_RANGE; x<= p->x + PLAYER_VIS_RANGE; ++x) {
+    for(int y = p->y - range; y <= p->y + range; ++y) {
+        for(int x=p->x - range; x<= p->x + range; ++x) {
             if( y >= 0 && x >= 0 && y < DN_HEIGHT && x < DN_WIDTH
-                && can_see(p->y,p->x, y, x, PLAYER_VIS_RANGE)) {
+                && can_see(p->y,p->x, y, x, range)) {
                 map[y][x].visible = true;
                 map[y][x].remembered = true;
             }
         }
     }
 
+}
+
+void reveal_map(void) {
+    Tile** map = game->level->map;
+    // make all tiles "remembered"
+    for(int y=0; y<DN_HEIGHT; ++y) {
+        for(int x=0; x<DN_WIDTH; ++x) {
+            if(has_adjacent_transparent(y,x)) {
+                map[y][x].remembered = true;
+            }
+        }
+    } 
+}
+
+bool has_adjacent_transparent(int ycoord, int xcoord) {
+    Tile** map = game->level->map;
+    for(int y=ycoord-1; y<=ycoord+1; ++y) {
+        for(int x=xcoord-1; x<=xcoord+1; ++x) {
+            if(y>=0 && y<DN_HEIGHT && x>=0 && x<DN_WIDTH) {
+                if(map[y][x].transparent) return true;
+            }
+        }
+    }
+    return false;
 }

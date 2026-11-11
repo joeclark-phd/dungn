@@ -228,6 +228,13 @@ void use_item(Creature* c, int selection) {
             c->effect = INVISIBILITY;
             c->effect_duration = 40;
             break;
+        case LIGHT:
+            c->effect = LIGHT;
+            c->effect_duration = 40;
+            break;
+        case MAPPING:
+            reveal_map();
+            break;
     }
     item_remove(inv, selection);
     char message[80];

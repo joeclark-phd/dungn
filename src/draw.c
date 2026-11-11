@@ -35,6 +35,7 @@ void draw_status_bar() {
     switch(player->effect) {
         case STRENGTH: fx="STRONG"; break;
         case INVISIBILITY: fx="INVISIBLE"; break;
+        case LIGHT: fx="LIT UP"; break;
         default: fx=""; break;
     }
     mvprintw(0,0,"HP: %2d/%2d AC:%2d ATK:1-%d %s", player->hp, 
