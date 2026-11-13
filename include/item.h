@@ -23,12 +23,12 @@ struct Item {
 #define HAND_AXE (Item) {'/', "hand axe", CP_RED, WEAPON, NONE, 6, false}
 #define LEATHER_ARMOR (Item) {'(', "leather armor", CP_BROWN, ARMOR, NONE, 3, false}
 #define CHAIN_MAIL (Item) {'[', "chain mail", CP_GRAY, ARMOR, NONE, 5, false}
-#define SCROLL_TELEPORT (Item) {'?', "scroll of teleport", CP_WHITE, NON_EQUIPPABLE, TELEPORT, false}
-#define SCROLL_LIGHT (Item) {'?', "scroll of light", CP_WHITE, NON_EQUIPPABLE, LIGHT, false}
-#define SCROLL_MAPPING (Item) {'?', "scroll of magic mapping", CP_WHITE, NON_EQUIPPABLE, MAPPING, false}
-#define POTION_HEALING (Item) {'!', "potion of healing", CP_PURPLE, NON_EQUIPPABLE, HEAL, false}
-#define POTION_INVISIBILITY (Item) {'!', "potion of invisibility", CP_ORANGE, NON_EQUIPPABLE, INVISIBILITY, false}
-#define POTION_STRENGTH (Item) {'!', "potion of strength", CP_CYAN, NON_EQUIPPABLE, STRENGTH, false}
+#define SCROLL_TELEPORT (Item) {'?', "scroll of teleport", CP_WHITE, NON_EQUIPPABLE, TELEPORT, 0, false}
+#define SCROLL_LIGHT (Item) {'?', "scroll of light", CP_WHITE, NON_EQUIPPABLE, LIGHT, 0, false}
+#define SCROLL_MAPPING (Item) {'?', "scroll of magic mapping", CP_WHITE, NON_EQUIPPABLE, MAPPING, 0, false}
+#define POTION_HEALING (Item) {'!', "potion of healing", CP_PURPLE, NON_EQUIPPABLE, HEAL, 0, false}
+#define POTION_INVISIBILITY (Item) {'!', "potion of invisibility", CP_ORANGE, NON_EQUIPPABLE, INVISIBILITY, 0, false}
+#define POTION_STRENGTH (Item) {'!', "potion of strength", CP_CYAN, NON_EQUIPPABLE, STRENGTH, 0, false}
 
 #define ITEMCATALOG (Item[]) { LONGSWORD, HAND_AXE, \
     LEATHER_ARMOR, CHAIN_MAIL, SCROLL_TELEPORT,     \
