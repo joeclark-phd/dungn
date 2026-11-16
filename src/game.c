@@ -2,16 +2,13 @@
 
 Game* game_init(void) {
     Game* game = calloc(1, sizeof(Game));
-    game->level = level_init();
-    Pos starting_pos = {};
-    do {
-        starting_pos = random_position_in_room(&game->level->rooms[0]);
-    } while(
-        monster_at(game->level->monsters, starting_pos.y, starting_pos.x) >= 0
-    );
+    game->all_levels = calloc(DN_DEPTH, sizeof(Level*));
+    game->current_depth = 0;
+    game->all_levels[0] = level_init(0);
+    game->level = game->all_levels[0];
     game->player = (Creature) {
-        .y = starting_pos.y,
-        .x = starting_pos.x,
+        .y = game->level->up_stair.y,
+        .x = game->level->up_stair.x,
         .symbol = '@',
         .inventory = item_vector_create(),
         .maxhp = 10,
@@ -74,4 +71,35 @@ void add_message(char* message) {
     }
     game->status_log[i] = strdup(message);
     game->last_status_index = i;
+}
+
+void attempt_down_stairs(Creature* player) {
+    if(game->level->map[player->y][player->x].symbol != '>') {
+        return;
+    } else {
+        // player is on a down stair
+        if(!game->all_levels[game->current_depth+1]) {
+            // generate a new level
+            game->all_levels[game->current_depth+1] = level_init(game->current_depth+1);
+        }
+        game->current_depth += 1;
+        game->level = game->all_levels[game->current_depth];
+        game->player.y = game->level->up_stair.y;
+        game->player.x = game->level->up_stair.x;
+    }
+}
+
+void attempt_up_stairs(Creature* player) {
+    if(game->level->map[player->y][player->x].symbol != '<') {
+        return;
+    } else if(game->current_depth==0) {
+        return;
+        // TODO: end game
+    } else {
+        // player is on a up stair
+        game->current_depth -= 1;
+        game->level = game->all_levels[game->current_depth];
+        game->player.y = game->level->down_stair.y;
+        game->player.x = game->level->down_stair.x;
+    }
 }

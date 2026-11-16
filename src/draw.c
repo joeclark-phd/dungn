@@ -40,7 +40,10 @@ void draw_status_bar() {
     }
     mvprintw(0,0,"HP: %2d/%2d AC:%2d ATK:1-%d %s", player->hp, 
         player->maxhp, player->armorclass, player->max_attack, fx);
-    mvprintw(0,76,"%4d", game->turn);
+    attron(COLOR_PAIR(CP_GRAY));
+    mvprintw(0,68,"LEVEL %d %4d", game->current_depth, game->turn);
+    attroff(COLOR_PAIR(CP_GRAY));
+
 }
 
 void draw_map(Tile** map) {

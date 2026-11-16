@@ -3,6 +3,8 @@
 
 #define DN_HEIGHT 21
 #define DN_WIDTH 80
+#define DN_DEPTH 5
+
 #define DN_ROOMS_PER_LEVEL 8
 #define DN_ITEMS_PER_LEVEL 60
 #define DN_CREATURES_PER_LEVEL 5
@@ -30,12 +32,13 @@ struct Level {
     Tile** map;
     Room* rooms;
     int num_rooms;
-    // monsters, items, etc
+    Pos down_stair;
+    Pos up_stair;
     CreatureVector* monsters;
 };
 
 
-Level* level_init(void);
+Level* level_init(int depth);
 void level_destroy(Level*);
 
 #endif

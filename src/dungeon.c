@@ -8,7 +8,7 @@ void mine_corridor(Level* lvl, Room a, Room b);
 void place_items(Level* lvl);
 void place_monsters(Level* lvl);
 
-Level* level_init(void) {
+Level* level_init(int depth) {
     Level* level = calloc(1, sizeof(Level));
     level->map = calloc(DN_HEIGHT, sizeof(Tile*));
     for(int i=0; i<DN_HEIGHT; ++i) {
@@ -20,6 +20,22 @@ Level* level_init(void) {
     place_items(level);
     level->monsters = creature_vector_create();
     place_monsters(level);
+    // place the up-stairs
+    level->up_stair = random_position_in_room(&level->rooms[0]);
+    level->map[level->up_stair.y][level->up_stair.x] = (Tile) {
+        .symbol = '<',
+        .transparent = true,
+        .walkable = true
+    };
+    // place the down-stairs
+    if(depth < DN_DEPTH-1) {
+        level->down_stair = random_position_in_room(&level->rooms[DN_ROOMS_PER_LEVEL-1]);
+        level->map[level->down_stair.y][level->down_stair.x] = (Tile) {
+            .symbol = '>',
+            .walkable = true,
+            .transparent = true
+        };
+    }
     return level;
 }
 

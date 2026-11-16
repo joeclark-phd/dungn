@@ -75,6 +75,8 @@ void game_loop(void) {
             case '9': turn_taken = attempt_move(player, -1, 1); break;
             case '1': turn_taken = attempt_move(player, 1, -1); break;
             case '3': turn_taken = attempt_move(player, 1, 1); break;
+            case '>': attempt_down_stairs(player); break;
+            case '<': attempt_up_stairs(player); break;
         }
         if(turn_taken) {
             // monsters move, etc.
