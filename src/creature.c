@@ -72,6 +72,7 @@ bool attempt_move(Creature* c, int dy, int dx) {
             snprintf(message, 80, "You slay the %s!", 
                 m->name );
             add_message(message);
+            add_xp(m->xp);
             creature_remove(game->level->monsters, monster_at(monsters,newy,newx));
         }
         // TODO: attack
@@ -342,5 +343,40 @@ void monsters_move() {
             m->y = p.y;
             m->x = p.x;
         }
+    }
+}
+
+void add_xp(int xp) {
+    Creature* player = &game->player;
+    player->xp += xp;
+    // see if he's gained a level
+    int levels_gained = 0;
+    switch(player->level) {
+        case 1:
+            if(player->xp >= 2000) {
+                levels_gained += 1;
+            }
+        case 2:
+            if(player->xp >= 4000) {
+                levels_gained += 1;
+            }
+        case 3:
+            if(player->xp >= 8000) {
+                levels_gained += 1;
+            }
+        case 4:
+            if(player->xp >= 16000) {
+                levels_gained += 1;
+            }
+        case 5:
+            if(player->xp >= 32000) {
+                levels_gained += 1;
+            }
+    }
+    for(int i=0; i<levels_gained; ++i) {
+        player->level += 1;
+        add_message("You gained a level!");
+        player->maxhp += rand_between(5, 10);
+        player->hp = player->maxhp;
     }
 }

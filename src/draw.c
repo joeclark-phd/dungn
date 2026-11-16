@@ -38,10 +38,12 @@ void draw_status_bar() {
         case LIGHT: fx="LIT UP"; break;
         default: fx=""; break;
     }
-    mvprintw(0,0,"HP: %2d/%2d AC:%2d ATK:1-%d %s", player->hp, 
-        player->maxhp, player->armorclass, player->max_attack, fx);
+    mvprintw(0,0,"LEVEL %d HERO -- HP: %2d/%2d AC:%2d ATK:1-%d XP: %d %s", 
+        player->level, player->hp, 
+        player->maxhp, player->armorclass, 
+        player->max_attack, player->xp, fx);
     attron(COLOR_PAIR(CP_GRAY));
-    mvprintw(0,68,"LEVEL %d %4d", game->current_depth, game->turn);
+    mvprintw(0,68,"FLOOR %d %4d", game->current_depth+1, game->turn);
     attroff(COLOR_PAIR(CP_GRAY));
 
 }

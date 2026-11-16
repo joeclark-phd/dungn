@@ -7,7 +7,7 @@
 
 #define DN_ROOMS_PER_LEVEL 8
 #define DN_ITEMS_PER_LEVEL 60
-#define DN_CREATURES_PER_LEVEL 5
+#define DN_CREATURES_PER_LEVEL 10
 
 typedef struct Tile Tile;
 struct Tile {

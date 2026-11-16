@@ -14,6 +14,8 @@ Game* game_init(void) {
         .maxhp = 10,
         .hp = 10,
         .thac0 = 20,
+        .xp = 0,
+        .level = 1,
         .armorclass = 10,
         .max_attack = 3,
         .effect = NONE,
