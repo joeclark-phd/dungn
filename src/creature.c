@@ -72,6 +72,12 @@ bool attempt_move(Creature* c, int dy, int dx) {
             snprintf(message, 80, "You slay the %s!", 
                 m->name );
             add_message(message);
+            if(m->symbol=='W') {
+                // wizard death!
+                Tile* tile = &game->level->map[m->y][m->x];
+                if(!tile->items) tile->items = item_vector_create();
+                item_add(tile->items, DIAMOND_OF_DESTINY);
+            }
             add_xp(m->xp);
             creature_remove(game->level->monsters, monster_at(monsters,newy,newx));
         }
@@ -158,8 +164,7 @@ void open_inventory(Creature* c) {
                 // use a magic item
                 if(c->inventory && c->inventory->count>0) {
                     use_item(c, selection);
-                    // blank the line
-                    mvwprintw(inv_win, selection+1, 1,  "%-78s", "");
+                    
                     // list is shorter, blank the last line
                     mvwprintw(inv_win, c->inventory->count+1, 1,  "%-78s", "");
                     if(selection >= c->inventory->count) --selection;
@@ -168,6 +173,8 @@ void open_inventory(Creature* c) {
         }
         if(c->inventory && c->inventory->count>0) {
             for(int i=0; i<c->inventory->count; ++i) {
+                // blank the line
+                mvwprintw(inv_win, i+1, 1,  "%-78s", "");
                 if(c->inventory->items[i].equipped) {
                     wattron(inv_win, COLOR_PAIR(CP_GOLD));
                 }

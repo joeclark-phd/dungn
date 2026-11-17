@@ -33,6 +33,8 @@
 #define CP_GRAY 11
 #define CP_WHITE 12
 #define CP_INVISIBLE 13
+#define CP_WIZARD 14
+#define CP_DIAMOND 15
 
 void draw_status_bar();
 void draw_everything(void);

@@ -171,8 +171,11 @@ void place_monsters(Level* lvl, int depth) {
         } while (
             monster_at(lvl->monsters,loc.y,loc.x) >= 0
         );
-        // place the item
+        // place the monster
         Creature c = CREATURE_CATALOG[depth][rand_between(0,2)];
+        if(i==0 && depth==4) {
+            c = WIZARD;
+        }
         c.y = loc.y;
         c.x = loc.x;
         creature_add(lvl->monsters, c);

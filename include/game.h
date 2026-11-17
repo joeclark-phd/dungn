@@ -45,6 +45,7 @@ void add_message(char* message);
 
 void attempt_down_stairs(Creature* player);
 void attempt_up_stairs(Creature* player);
+void splash_screen(char* message);
 
 // globals
 extern Game* game;

@@ -95,8 +95,19 @@ void attempt_up_stairs(Creature* player) {
     if(game->level->map[player->y][player->x].symbol != '<') {
         return;
     } else if(game->current_depth==0) {
+        bool has_diamond = false;
+        for(int i = 0; i<player->inventory->count; ++i) {
+            if(player->inventory->items[i].symbol=='*') {
+                has_diamond = true;
+            }
+        }
+        if(has_diamond) {
+            splash_screen("VICTORY! \n\n You alone have proven worthy.");
+        } else {
+            splash_screen("COWARD??? \n\n You left the dungeon without the treasure.");
+        }
+        game->current_depth -= 1;
         return;
-        // TODO: end game
     } else {
         // player is on a up stair
         game->current_depth -= 1;

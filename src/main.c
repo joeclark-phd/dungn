@@ -2,7 +2,6 @@
 
 // function declarations
 void game_loop(void);
-void splash_screen(char* message);
 bool dialog(char* message);
 
 Game* game;
@@ -76,7 +75,10 @@ void game_loop(void) {
             case '1': turn_taken = attempt_move(player, 1, -1); break;
             case '3': turn_taken = attempt_move(player, 1, 1); break;
             case '>': attempt_down_stairs(player); break;
-            case '<': attempt_up_stairs(player); break;
+            case '<': 
+                attempt_up_stairs(player);
+                if(game->current_depth < 0) game_over = true;
+                break;
         }
         if(turn_taken) {
             // monsters move, etc.

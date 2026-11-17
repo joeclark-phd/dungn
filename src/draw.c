@@ -107,6 +107,8 @@ void setup_colors(void) {
     init_pair(CP_GRAY, STEEL_GRAY, COLOR_BLACK);
     init_pair(CP_WHITE, BONE_WHITE, COLOR_BLACK);
     init_pair(CP_INVISIBLE, BONE_WHITE, STEEL_GRAY);
+    init_pair(CP_WIZARD, BLOOD_RED, HONEY_GOLD);
+    init_pair(CP_DIAMOND, BONE_WHITE, POTION_CYAN);
 
     init_pair(VISIBLE_TILE, PALE_YELLOW, COLOR_BLACK);
     init_pair(REMEMBERED_TILE, GRAY_BLUE, COLOR_BLACK);

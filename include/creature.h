@@ -39,11 +39,13 @@ struct Creature {
 #define OGRE (Creature) { 'O', "ogre", CP_CYAN, "smites", 10, 12, 13, 13, 20, 3200, 0, 0, 0, 0 }
 
 // creepy crawly
-#define SNAIL (Creature) { 's', "slime snail", CP_BLUE, "slimes", 4, 6, 2, 2, 20, 200, 0, 0, 0, 0 }
+#define SNAIL (Creature) { 's', "slime snail", CP_ORANGE, "slimes", 4, 6, 2, 2, 20, 200, 0, 0, 0, 0 }
 #define SPIDER (Creature) { 'x', "cave spider", CP_BLUE, "nibbles", 5, 6, 3, 3, 20, 400, 0, 0, 0 , 0}
-#define SCORPION (Creature) { 'X', "scorpion", CP_BLUE, "stings", 6, 6, 4, 4, 20, 800, 0, 0, 0 , 0}
-#define LIZARD (Creature) { 'l', "warty lizard", CP_BLUE, "bites", 7, 6, 5, 5, 20, 1600, 0, 0, 0 , 0}
-#define SNAKE (Creature) { 'S', "big snake", CP_BLUE, "constricts", 8, 6, 6, 6, 20, 3200, 0, 0, 0, 0 }
+#define SCORPION (Creature) { 'X', "scorpion", CP_WHITE, "stings", 6, 6, 4, 4, 20, 800, 0, 0, 0 , 0}
+#define LIZARD (Creature) { 'l', "warty lizard", CP_GREEN, "bites", 7, 6, 5, 5, 20, 1600, 0, 0, 0 , 0}
+#define SNAKE (Creature) { 'S', "big snake", CP_RED, "constricts", 8, 6, 6, 6, 20, 3200, 0, 0, 0, 0 }
+
+#define WIZARD (Creature) { 'W', "mad wizard", CP_WIZARD, "zaps", 12, 7, 20, 20, 20, 6400, 0, 0, 0, 0 }
 
 #define CREATURE_CATALOG (Creature*[]) {        \
     (Creature[]) { MOUSE, KOBOLD, SNAIL },     \
