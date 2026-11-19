@@ -31,6 +31,8 @@ struct Game {
     char** status_log;
     int last_status_index;
     int previous_last_status;
+    int monsters_killed;
+    int deepest_level_reached;
 };
 
 // constructor + destructor

@@ -68,6 +68,7 @@ bool attempt_move(Creature* c, int dy, int dx) {
         }
         if(m->hp <= 0) {
             // monster kill
+            game->monsters_killed += 1;
             char message[80];
             snprintf(message, 80, "You slay the %s!", 
                 m->name );
@@ -147,8 +148,6 @@ void open_inventory(Creature* c) {
                 // drop item
                 if(c->inventory && c->inventory->count>0) {
                     drop_item(c, selection);
-                    // blank the line
-                    mvwprintw(inv_win, selection+1, 1,  "%-78s", "");
                     // list is shorter, blank the last line
                     mvwprintw(inv_win, c->inventory->count+1, 1,  "%-78s", "");
                     if(selection >= c->inventory->count) --selection;
@@ -164,7 +163,6 @@ void open_inventory(Creature* c) {
                 // use a magic item
                 if(c->inventory && c->inventory->count>0) {
                     use_item(c, selection);
-                    
                     // list is shorter, blank the last line
                     mvwprintw(inv_win, c->inventory->count+1, 1,  "%-78s", "");
                     if(selection >= c->inventory->count) --selection;
