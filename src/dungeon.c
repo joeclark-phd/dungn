@@ -21,7 +21,9 @@ Level* level_init(int depth) {
     level->monsters = creature_vector_create();
     place_monsters(level, depth);
     // place the up-stairs
-    level->up_stair = random_position_in_room(&level->rooms[0]);
+    do {
+        level->up_stair = random_position_in_room(&level->rooms[0]);
+    } while(monster_at(level->monsters, level->up_stair.y, level->up_stair.x) > -1);
     level->map[level->up_stair.y][level->up_stair.x] = (Tile) {
         .symbol = '<',
         .transparent = true,
@@ -29,7 +31,9 @@ Level* level_init(int depth) {
     };
     // place the down-stairs
     if(depth < DN_DEPTH-1) {
-        level->down_stair = random_position_in_room(&level->rooms[DN_ROOMS_PER_LEVEL-1]);
+        do {
+            level->down_stair = random_position_in_room(&level->rooms[DN_ROOMS_PER_LEVEL-1]);
+        } while(monster_at(level->monsters, level->down_stair.y, level->down_stair.x) > -1);
         level->map[level->down_stair.y][level->down_stair.x] = (Tile) {
             .symbol = '>',
             .walkable = true,
