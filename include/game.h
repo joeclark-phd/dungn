@@ -7,12 +7,6 @@
 #include <math.h>
 #include <string.h>
 
-typedef struct Pos Pos;
-struct Pos {
-    int y;
-    int x;
-};
-
 #include "item.h"
 #include "creature.h"
 #include "dungeon.h"

@@ -9,6 +9,12 @@
 #define DN_ITEMS_PER_LEVEL 60
 #define DN_CREATURES_PER_LEVEL 10
 
+typedef struct Pos Pos;
+struct Pos {
+    int y;
+    int x;
+};
+
 typedef struct Tile Tile;
 struct Tile {
     char symbol;
